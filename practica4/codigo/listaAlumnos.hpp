@@ -30,14 +30,27 @@ private:
 public:
 
 	//Constructor de la clase
-	inline ListaAlumnos()
+	inline ListaAlumnos(bool orden=true, bool ordenado=true)
 	{
-		ordenado_=true;
-		orden_=true;
+		ordenado_=ordenado;
+		orden_=orden;
 
 		#ifndef NDEBUG
 			assert(!tamClase());
 		#endif
+	}
+
+	inline ListaAlumnos(ListaAlumnos const &lista)
+	{
+		Alumno aux;
+		for(int i=0;i<lista.tamClase();i++)
+		{
+			aux=lista.getAlumno(i);
+			insertar(aux);
+		}
+
+		orden_=lista.getOrden();
+		ordenado_=lista.getOrdenado();
 	}
 
 	//Observadores
@@ -73,10 +86,13 @@ public:
 	}
 	
 	//Fija un nuevo criterio de ordenacion
-	inline void setOrden(int const &nOrden){orden_=(bool)nOrden;}
+	inline void setOrden(int const &nOrden)
+	{
+		orden_=nOrden;
+	}
 
 	//Fija el orden (creciente/decreciente)
-	inline void setOrdenado(int const &nOrdenado){ordenado_=(bool)nOrdenado;}
+	inline void setOrdenado(int const &nOrdenado){ordenado_=nOrdenado;}
 
 	//Métodos de la clase
 	//insertar: inserta un nuevo alumno en la lista

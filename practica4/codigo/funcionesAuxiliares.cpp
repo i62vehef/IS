@@ -763,7 +763,9 @@ void reordenarAlumnos(Profesor &p)
 		std::cin>>opcion;
 	}
 
-	p.getAgenda().setOrden(opcion-1);
+	opcion--;
+
+	int orden=opcion;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -786,15 +788,22 @@ void reordenarAlumnos(Profesor &p)
 		std::cin>>opcion;
 	}
 
-	p.getAgenda().setOrdenado(opcion-1);
+	opcion--;
 
-	ListaAlumnos aux=p.getAgenda();
+	int ordenado=opcion;
+	
+	ListaAlumnos aux(p.getAgenda());
+	
+	aux.setOrdenado(ordenado);
+	aux.setOrden(orden);
+	
 	quicksort(0,p.getAgenda().tamClase()-1, aux);
 
 	p.setAgenda(aux);
 
-
 	std::cout<<BIGREEN<<"Se han ordenado los alumnos correctamente\n"<<RESET;
+
+	std::cin.ignore();
 }
 
 void registrarNuevoProfesor(Profesor &p)
@@ -1041,10 +1050,10 @@ int particion(int primero, int ultimo, ListaAlumnos &lista)
 
 		   			for(int j=primero; j<=ultimo-1; j++)
 		   			{
-		   				if(lista.getAlumno(j).getEquipo()<pivoteGrupo)
+		   				if(lista.getAlumno(j).getEquipo()>pivoteGrupo)
 		      			{
 		    				i++;
-		         			lista.swap(i, j);
+		         			lista.swap(i,j);
 		      			}	
 		   			}
 				   	lista.swap(i+1, ultimo);
@@ -1055,7 +1064,7 @@ int particion(int primero, int ultimo, ListaAlumnos &lista)
 
 		   			for(int j=primero; j<=ultimo-1; j++)
 		   			{
-		   				if(lista.getAlumno(j).getEquipo()>pivoteGrupo)
+		   				if(lista.getAlumno(j).getEquipo()<pivoteGrupo)
 		      			{
 		    				i++;
 		         			lista.swap(i, j);
