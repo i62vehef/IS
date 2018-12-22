@@ -115,6 +115,12 @@ void introducirAlumno(Profesor &p)
 	p.nuevoAlumno(aux);
 	
 	std::cout << BIGREEN <<"Alumno registrado correctamente" <<RESET <<std::endl;
+
+	ListaAlumnos listaAux=p.getAgenda();
+
+	quicksort(0,p.getAgenda().tamClase()-1,listaAux);
+
+	p.setAgenda(listaAux);
 	
 	std::cin.ignore();
 }
@@ -333,6 +339,12 @@ void modificarDatosAlumno(Profesor &p)
 		p.modificarAlumno(buscado.front(),aux);
 
 	std::cout<<BIGREEN<<"Se han modificado los datos del alumno satisfactoriamente \n";
+
+	ListaAlumnos listaAux=p.getAgenda();
+
+	quicksort(0,p.getAgenda().tamClase()-1,listaAux);
+
+	p.setAgenda(listaAux);
 
 	std::cin.ignore();
 }
@@ -685,10 +697,104 @@ void mostrarListaAlumnos(Profesor &p)
 
 	std::cout<<BIGREEN<<"La lista de alumnos registrados es la siguiente:\n"<<RESET<<std::endl;
 
+	std::cout<<"Apellido,Nombre DNI Nacimiento Telefono Domicilio Curso Correo Grupo Lider?\n\n";
 	std::system("cat ./listaAlumnos.txt");
 
 	std::system("rm ./listaAlumnos.txt");
 
+}
+
+void reordenarAlumnos(Profesor &p)
+{
+	std::system("clear");
+
+	if(p.getAgenda().tamClase()<=0)
+	{
+		std::cout<<BIRED<<"\n ERROR No hay alumnos registrados\n"<<RESET;
+		return;
+	}
+
+	if(p.getAgenda().getOrden())
+	{
+		if(p.getAgenda().getOrdenado())
+			std::cout<<"\n Actualmente los alumnos se encuentran ordenaos por su "<<BICYAN<<"Apellido"<<RESET<<" en orden "<<BICYAN<<"alfabetico"<<RESET<<"\n";
+		else
+			std::cout<<"\n Actualmente los alumnos se encuentran ordenaos por su "<<BICYAN<<"Apellido"<<RESET<<" en orden "<<BICYAN<<"alfabetico inverso"<<RESET<<"\n";
+	}
+	else
+	{
+		if(p.getAgenda().getOrdenado())
+			std::cout<<"\n Actualmente los alumnos se encuentran ordenaos por su "<<BICYAN<<"Grupo"<<RESET<<" en orden "<<BICYAN<<"creciente"<<RESET<<"\n";
+		else
+			std::cout<<"\n Actualmente los alumnos se encuentran ordenaos por su "<<BICYAN<<"Grupo"<<RESET<<" en orden "<<BICYAN<<"decreciente"<<RESET<<"\n";
+	}
+
+	int opcion;
+	std::cout<<" Desea cambiar este criterio?\n [1]Si/[2]No\n";
+	std::cin>>opcion;
+
+	while(opcion!=1 && opcion!=2)
+	{
+		std::cout<<BIRED<<"Opcion invalida\n"<<RESET;
+
+		std::cout<<" Desea cambiar este criterio?\n[1]Si/[2]No\n";
+		std::cin>>opcion;
+	}
+	if(opcion==2) return;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//Seleccion del criterio de ordenacion
+	std::cout<<"\n Introduzca el nuevo criterio de ordenacion\n";
+	std::cout<<BIYELLOW<<"(Si desea mantener el actual indique su respectiva opcion)\n"<<RESET;
+	std::cout<<" [1] Grupo\n";
+	std::cout<<" [2] Apellido\n";
+	std::cin>>opcion;
+
+	while(opcion!=1 && opcion!=2)
+	{
+		std::cout<<BIRED<<"Opcion invalida\n"<<RESET;
+
+		std::cout<<"\n Introduzca el nuevo criterio de ordenacion\n";
+		std::cout<<BIYELLOW<<"(Si desea mantener el actual indique su respectiva opcion)\n"<<RESET;
+		std::cout<<" [1] Grupo\n";
+		std::cout<<" [2] Apellido\n";
+
+		std::cin>>opcion;
+	}
+
+	p.getAgenda().setOrden(opcion-1);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//seleccion del orden 
+	std::cout<<"\n Introduzca el nuevo orden\n";
+	std::cout<<BIYELLOW<<"(Si desea mantener el actual indique su respectiva opcion)\n"<<RESET;
+	std::cout<<" [1] Decreciente/Alfabetico\n";
+	std::cout<<" [2] Creciente/Alfabetico inverso\n\n";
+	std::cin>>opcion;
+
+	while(opcion!=1 && opcion!=2)
+	{
+		std::cout<<BIRED<<"Opcion invalida\n"<<RESET;
+
+		std::cout<<"\n Introduzca el nuevo orden\n";
+		std::cout<<BIYELLOW<<"(Si desea mantener el actual indique su respectiva opcion)\n"<<RESET;
+		std::cout<<" [1] Decreciente/Alfabetico\n";
+		std::cout<<" [2] Creciente/Alfabetico inverso\n\n";
+
+		std::cin>>opcion;
+	}
+
+	p.getAgenda().setOrdenado(opcion-1);
+
+	ListaAlumnos aux=p.getAgenda();
+	quicksort(0,p.getAgenda().tamClase()-1, aux);
+
+	p.setAgenda(aux);
+
+
+	std::cout<<BIGREEN<<"Se han ordenado los alumnos correctamente\n"<<RESET;
 }
 
 void registrarNuevoProfesor(Profesor &p)
@@ -804,6 +910,12 @@ void cargarCopia(Profesor &p)
 
 	std::cout<<BIGREEN<<"Se ha cargado el fichero satisfactoriamente"<<RESET<<std::endl;
 
+	ListaAlumnos listaAux=p.getAgenda();
+
+	quicksort(0,p.getAgenda().tamClase()-1,listaAux);
+
+	p.setAgenda(listaAux);
+
 	std::cin.ignore();
 }
 
@@ -914,19 +1026,80 @@ void quicksort(int primero, int ultimo, ListaAlumnos &lista)
 
 int particion(int primero, int ultimo, ListaAlumnos &lista)
 {
-   std::string pivote=lista.getAlumno(ultimo).getApellido();
-   int i=primero-1;
+	std::string pivoteApellido;
+	int pivoteGrupo;
 
-   for(int j=primero; j<=ultimo-1; j++)
-   {
-   		if(strcmp(lista.getAlumno(j).getApellido().c_str(),pivote.c_str())>=0)
-      	{
-    		i++;
-         	lista.swap(i, j);
-      	}
-   }
-   lista.swap(i+1, ultimo);
-   return i+1;
+	int i=primero-1;
+
+	switch((int)lista.getOrden())
+	{
+		case 0://GRUPO
+			switch((int)lista.getOrdenado())
+			{
+				case 0://DECRECIENTE
+					pivoteGrupo=lista.getAlumno(ultimo).getEquipo();
+
+		   			for(int j=primero; j<=ultimo-1; j++)
+		   			{
+		   				if(lista.getAlumno(j).getEquipo()<pivoteGrupo)
+		      			{
+		    				i++;
+		         			lista.swap(i, j);
+		      			}	
+		   			}
+				   	lista.swap(i+1, ultimo);
+				   	return i+1;
+				break;
+				case 1://CRECIENTE
+					pivoteGrupo=lista.getAlumno(ultimo).getEquipo();
+
+		   			for(int j=primero; j<=ultimo-1; j++)
+		   			{
+		   				if(lista.getAlumno(j).getEquipo()>pivoteGrupo)
+		      			{
+		    				i++;
+		         			lista.swap(i, j);
+		      			}	
+		   			}
+				   	lista.swap(i+1, ultimo);
+				   	return i+1;
+				break;
+			}
+		break;
+		case 1://APELLIDO
+			switch((int)lista.getOrdenado())
+			{
+				case 0://DECRECIENTE/ALFABETICO
+				   	pivoteApellido=lista.getAlumno(ultimo).getApellido();
+
+				   	for(int j=primero; j<=ultimo-1; j++)
+				   	{
+				   		if(strcmp(lista.getAlumno(j).getApellido().c_str(),pivoteApellido.c_str())>0)
+				      	{
+				    		i++;
+				         	lista.swap(i, j);
+				      	}
+				   	}
+				   	lista.swap(i+1, ultimo);
+				   	return i+1;
+				break;
+				case 1://CRECIENTE/ALFABETICO INVERSO
+				   	pivoteApellido=lista.getAlumno(ultimo).getApellido();
+
+				   	for(int j=primero; j<=ultimo-1; j++)
+				   	{
+				   		if(strcmp(lista.getAlumno(j).getApellido().c_str(),pivoteApellido.c_str())<0)
+				      	{
+				    		i++;
+				         	lista.swap(i, j);
+				      	}
+				   	}
+				   	lista.swap(i+1, ultimo);
+				   	return i+1;
+				break;
+			}
+		break;
+	}
 }
 
 int menu(bool &membresia)
@@ -984,22 +1157,25 @@ int menu(bool &membresia)
 	PLACE(posicion++,10);
 	std::cout << BIGREEN << "[9]" << RESET << " Mostrar lista de alumnos";
 
+	PLACE(posicion++,10);
+	std::cout << BIGREEN << "[10]" << RESET << " Reordenar alumnos";
+
 	if(membresia)
 	{
 		//////////////////////////////////////////////////////////////////////////////
 		posicion++;
 
 		PLACE(posicion++,10);
-		std::cout << BICYAN << "[10]" << RESET << " Registrar nuevo profesor";
+		std::cout << BICYAN << "[11]" << RESET << " Registrar nuevo profesor";
 
 		//////////////////////////////////////////////////////////////////////////////
 		posicion++;
 
 		PLACE(posicion++,10);
-		std::cout << IGREEN << "[11]" << RESET << " Cargar copia de seguridad";
+		std::cout << IGREEN << "[12]" << RESET << " Cargar copia de seguridad";
 
 		PLACE(posicion++,10);
-		std::cout << IGREEN << "[12]" << RESET << " Crear copia de seguridad";
+		std::cout << IGREEN << "[13]" << RESET << " Crear copia de seguridad";
 	}
 
 	//////////////////////////////////////////////////////////////////////////////

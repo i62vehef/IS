@@ -10,11 +10,11 @@ int main(int argc, char ** argv)
 	int opcion;
 
 	bool logged=false;
-	bool coordinador=true;
+	bool coordinador=false;
 	
 	Profesor tutor;
 
-	/*tutor=logIn();
+	tutor=logIn();
 
 	if(tutor.getId()==-1)
 	{
@@ -83,7 +83,11 @@ int main(int argc, char ** argv)
 					case 9://Mostrar lista de alumnos
 						mostrarListaAlumnos(tutor);
 						std::cin.ignore();
-					break;														
+					break;		
+					case 10://Reordenar lista de alumnos
+						reordenarAlumnos(tutor);
+						std::cin.ignore();
+					break;													
 					default:
 						std::cout<<BIRED<<"ERROR en la opcion del menu"<<RESET<<std::endl;
 						std::cin.ignore();
@@ -135,15 +139,19 @@ int main(int argc, char ** argv)
 						mostrarListaAlumnos(tutor);
 						std::cin.ignore();
 					break;
-					case 10://Registrar nuevo profesor
+					case 10://Reordenar lista de alumnos
+						reordenarAlumnos(tutor);
+						std::cin.ignore();
+					break;	
+					case 11://Registrar nuevo profesor
 						registrarNuevoProfesor(tutor);
 						std::cin.ignore();
 					break;
-					case 11://Cargar copia de seguridad
+					case 12://Cargar copia de seguridad
 						cargarCopia(tutor);
 						std::cin.ignore();
 					break;
-					case 12://Crear copia de seguridad
+					case 13://Crear copia de seguridad
 						crearCopia(tutor);
 						std::cin.ignore();
 					break;															
@@ -152,7 +160,7 @@ int main(int argc, char ** argv)
 						std::cin.ignore();
 				}
 			}while(opcion!=0);
-		//break;
-	//}
+		break;
+	}
 	return 0;
 }

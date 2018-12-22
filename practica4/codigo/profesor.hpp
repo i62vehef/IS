@@ -81,7 +81,7 @@ public:
 			assert(rol_==nRol);
 		#endif
 	}
-	inline void setAgenda(ListaAlumnos &nAgenda)
+	inline void setAgenda(ListaAlumnos nAgenda)
 	{
 		agenda_=nAgenda;
 	}
@@ -98,11 +98,9 @@ public:
 
 	inline Profesor operator=(Profesor const &profesor)
 	{
-		ListaAlumnos nuevaAgenda;
-		nuevaAgenda=profesor.getAgenda();
 		setNombre(profesor.getNombre());
 		setId(profesor.getId());
-		setAgenda(nuevaAgenda);
+		setAgenda(profesor.getAgenda());
 		setContrasena(profesor.getContrasena());
 		setRol(profesor.getRol());
 

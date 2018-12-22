@@ -20,14 +20,21 @@ private:
 	//booleano que indica si esta ordenado en orden creciente o decreciente
 	//creciente=1
 	//decreciente=0
-	bool ordenado;
+	bool ordenado_;
 
+	//Criterio de ordenacion de la lista
+	//apellido=1
+	//grupo=0
+	bool orden_;
 
 public:
 
 	//Constructor de la clase
 	inline ListaAlumnos()
 	{
+		ordenado_=true;
+		orden_=true;
+
 		#ifndef NDEBUG
 			assert(!tamClase());
 		#endif
@@ -42,6 +49,13 @@ public:
 		#endif
 		return alumnos_[i];
 	}
+
+	//Indica el criterio de ordenacion
+	inline bool getOrden()const{return orden_;}
+
+	//Indica si la lista esta ordenada de forma decreciente o creciente
+	inline bool getOrdenado()const{return ordenado_;}
+
 	//Devuelve el numero de alumnos registrados
 	inline int tamClase()const{return alumnos_.size();}
 
@@ -57,6 +71,12 @@ public:
 		#endif
 		alumnos_[i]=nAlumno;
 	}
+	
+	//Fija un nuevo criterio de ordenacion
+	inline void setOrden(int const &nOrden){orden_=(bool)nOrden;}
+
+	//Fija el orden (creciente/decreciente)
+	inline void setOrdenado(int const &nOrdenado){ordenado_=(bool)nOrdenado;}
 
 	//Métodos de la clase
 	//insertar: inserta un nuevo alumno en la lista
@@ -109,6 +129,7 @@ public:
 
 	//Operadores
 
+	//Operador de asignacion
 	inline ListaAlumnos operator=(ListaAlumnos const &lista)
 	{
 		for(int i=0;tamClase();i++) eliminar(i);
@@ -118,6 +139,10 @@ public:
 			aux=lista.getAlumno(i);
 			insertar(aux);
 		}
+
+		setOrden((int)lista.getOrden());
+		setOrdenado((int)lista.getOrdenado());
+
 		return *this;
 	}
 
