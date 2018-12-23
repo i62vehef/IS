@@ -12,5 +12,6 @@ El sistema debe poder borrar un alumno.
 
 + Deben quedar borrados todos los datos del alumno.
 
-+ Si el alumno a borrar era lider de su grupo, el grupo quedará sin líder hasta modificación de los datos alguno de los miembros restantes.
++ Si el alumno a borrar era lider de su grupo, el grupo quedará sin líder hasta modificación de 
+  los datos de alguno de los miembros restantes.
 
