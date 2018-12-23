@@ -10,18 +10,18 @@
 
 **Precondiciones:**
 
- 1. El grupo debe estar registrado
+  1. El grupo debe estar registrado
 
  **Flujo principal:**
 
-  1. El sistema necesitar mostrar los alumnos de un grupo.
+  1. El sistema necesita mostrar los alumnos de un grupo.
   2. El sistema pide al usuario el ID del grupo.
   3. El sistema busca los alumnos por la ID de su grupo.
-  4. Se muestran los nombres y apellidos de los componentes, resaltando al líder.
+  4. Se muestran los datos de los componentes, resaltando al líder.
 
  **Postcondiciones:**
 
-  1. Se muestran los nombres y apellidos de los componentes del grupo.
+  1. Se muestran los datos de los componentes del grupo.
 
  **Flujos alternativos:**
  
