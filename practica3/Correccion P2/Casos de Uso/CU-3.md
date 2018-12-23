@@ -18,9 +18,9 @@
 **Flujo principal:**
 
   1. El sistema necesita cargar de un fichero datos sobre alumnos.
-  2. El sistema pide el nombre del fichero.
+  2. El sistema pregunta cual es el fichero o copia a cargar.
   3. Se carga la lista de alumnos en el sistema desde el fichero indicado.
-  4. El sistema mostrará un mensaje de que la lista se cargo correctamente.
+  4. El sistema mostrará un mensaje de que la lista se cargó correctamente.
 
 **Postcondiciones:**
 
@@ -32,6 +32,6 @@
 
  2b. Se vuelve al menú principal.
 
- 3a. El sistema mostrará un mensaje de error si la lista no se cargo correctamente.
+ 3a. El sistema mostrará un mensaje de error si la lista no se cargó correctamente.
 
  3b. Se vuelve al menú principal.
