@@ -168,11 +168,13 @@ public:
 		setApellido(alumno.getApellido());
 		setNombre(alumno.getNombre());
 		setDNI(alumno.getDNI());
+		setFechaNacimiento(alumno.getFechaNacimiento());
 		setTelefono(alumno.getTelefono());
 		setDomicilio(alumno.getDomicilio());
 		setCurso(alumno.getCurso());
 		setEmail(alumno.getEmail());
 		setEquipo(alumno.getEquipo());
+		setLider(alumno.esLider());
 
 		return *this;
 	}

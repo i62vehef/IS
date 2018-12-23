@@ -48,18 +48,19 @@ istream &operator>>(istream &stream, Alumno &alumno)
 	std::getline(stream, str1, ' ');
 	alumno.setDNI(str1);
 	
+	int dia, mes, agno;
 	std::getline(stream,str1,'-');
-    int dia=atoi(str1.c_str());
+    dia=atoi(str1.c_str());
 
 	std::getline(stream,str1,'-');
-    int mes=atoi(str1.c_str());
+    mes=atoi(str1.c_str());
 
 	std::getline(stream,str1,' ');
-    int anyo=atoi(str1.c_str());
+    agno=atoi(str1.c_str());
 
-	Fecha *aux= new Fecha(dia, mes, anyo);
-	if(aux->esCorrecta())
-		alumno.setFechaNacimiento(*aux);
+	Fecha aux(dia, mes, agno);
+	if(aux.esCorrecta())
+		alumno.setFechaNacimiento(Fecha(dia,mes,agno));
 
 	std::getline(stream, str1, ' ');
 	alumno.setTelefono(atoi(str1.c_str()));

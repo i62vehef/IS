@@ -298,38 +298,55 @@ void modificarDatosAlumno(Profesor &p)
 	std::cin>>grupo;
 	if(grupo.compare("0")!=0 && atoi(grupo.c_str())!=aux.getEquipo()) 
 	{
-		while(atoi(grupo.c_str())<1 || atoi(grupo.c_str())>150)
+		while(atoi(grupo.c_str())<0 || atoi(grupo.c_str())>150)
 		{
 			std::cout<<BIRED<<"ERROR grupo invalido"<<RESET<<std::endl;
-
+			
 			std::cout<<"Grupo: ";
 			std::cin>>grupo;
-		}
 
-		if(p.getAgenda().buscarAlumno(3,grupo).size()>=3)
+			if(grupo.compare("0")==0)
+				return;
+		}
+		
+		std::vector<int> equipo;
+		bool hayLider=false;
+		if((equipo=p.getAgenda().buscarAlumno(3,grupo)).size()>=3)
 		{
 			std::cout<<BIRED<<"ERROR Este grupo ya se encuentra completo"<<RESET<<std::endl;
-
 			return;
 		}
 
-		if(atoi(grupo.c_str())==0) return;
-
 		aux.setEquipo(atoi(grupo.c_str()));
-
-		int lider;
-		std::cout<<"Es el lider del grupo?[1:Si/2:No]"<<std::endl;
-		std::cin>>lider;
-
-		while(lider>2 || lider<1)
+		
+		for(int i=0;i<equipo.size();i++)
 		{
-			std::cout<<"Introduzca un valor valido"<<std::endl;
-			std::cout<<"Es el lider del grupo?[1:Si/2:No]"<<std::endl;
-			std::cin>>lider;
+			if(p.getAgenda().getAlumno(equipo[i]).esLider())
+			{
+				hayLider=true;
+				break;
+			} 
 		}
 
-		if(lider==1) aux.setLider();
+		int lider;
+		if(!hayLider)
+		{
+
+			std::cout<<"Es el lider del grupo?[1:No/2:Si]"<<std::endl;
+			std::cin>>lider;
+
+			while(lider>2 || lider<1)
+			{
+				std::cout<<"Introduzca un valor valido"<<std::endl;
+				std::cout<<"Es el lider del grupo?[1:No/2:Si]"<<std::endl;
+				std::cin>>lider;
+			}
+			
+			aux.setLider(lider);
+		}
 	}
+
+
 
 	if(atoi(grupo.c_str())==0) return;
 
@@ -600,7 +617,7 @@ void mostrarDatosdeAlumno(Profesor &p)
 					}
 
 					//ya sabemos el alumno buscado
-					p.getAgenda().mostrarAlumno(buscado[opcionapellido]);
+					p.getAgenda().mostrarAlumno(buscado[opcionapellido-1]);
 
 				}
 				else//0 encontrados
@@ -875,7 +892,6 @@ void cargarCopia(Profesor &p)
 	//crear fichero llamado clase[fechadelacopia].bin
 	std::fstream fichero;
 
-	//nombrefichero=now->tm_mday+'-'+(now->tm_mon + 1)+'-'+(now->tm_year + 1900);
 	std::cout<<"\n Introduzca el dia de la copia que desea recuperar"<<std::endl;
 
 	Fecha fecha;
