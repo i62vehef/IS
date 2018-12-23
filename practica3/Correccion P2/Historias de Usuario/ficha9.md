@@ -10,6 +10,4 @@ El sistema debe poder mostrar una lista de todos los alumnos registrados.
 
 + Se mostrarán de forma ordenada creciente o decrecientemente.
 
-+ El orden será por apellidos.
-
-+ Se crearán ficheros HTML.
++ El orden será por apellidos o grupo.

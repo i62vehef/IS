@@ -17,8 +17,8 @@
  **Flujo principal:**
 
   1. El sistema necesita crear una copia de seguridad.
-  2. El sistema creara una copia de seguridad sin sobrescribir la anterior.
-  3. Se muestra un mensaje de que ha grabado el fichero correctamente.
+  2. El sistema creará una copia de seguridad sin necesidad de sobrescribir la anterior.
+  3. Se muestra un mensaje de que se ha grabado el fichero correctamente.
 
 **Postcondiciones:**
 
