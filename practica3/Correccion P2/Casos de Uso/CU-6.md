@@ -17,8 +17,7 @@
   1. El sistema necesita modificar los datos de un alumno.
   2. Se piden los datos del alumno para buscarlo: DNI o apellidos.
   3. Se busca el alumno.
-  4. El sistema pregunta cuál es el dato a modificar.
-  5. Se pide el nuevo valor.
+  4. Se pide el nuevo valor para los valores que se deseen modificar.
 
  **Postcondiciones:**
 
